@@ -33,7 +33,7 @@ public class Board {
     public void printBoard() {
         for (Cell[] row : board) {
             for (Cell cell : row) {
-                char status = cell.getStatus();
+                String status = cell.getStatus();
                 String colorCode = switch (status) {
                     case Cell.SHIP -> cell.colourCode;
                     case Cell.WATER -> "\u001B[34m";
@@ -299,6 +299,66 @@ public class Board {
         }
         return true;
     }
+    public void printBoardsSideBySide(Board enemyBoard) {
+        System.out.println();
+        System.out.println("\t\t\t\t\tEnemy Board\t\t\t\t\t\t\t\t\t\t\t\tYour Board");
+
+        // Print column headers for both boards
+        System.out.print("      ");
+        for (int col = 0; col < enemyBoard.board[0].length; col++) {
+            System.out.print(col + "   ");  // Adjust spacing to 3 spaces for better alignment
+        }
+        System.out.print("        ");
+        for (int col = 0; col < board[0].length; col++) {
+            System.out.print(col + "   ");  // Adjust spacing to 3 spaces for better alignment
+        }
+        System.out.println();
+
+        // Print rows for both boards
+        for (int row = 0; row < board.length; row++) {
+            // Print the row number and the enemy board row
+            System.out.print(row + "   ");  // Adjusted spacing here for row numbers
+            for (Cell cell : enemyBoard.board[row]) {
+                String status = cell.getStatus();
+                String displayStatus;
+                String colorCode;
+
+                if (Objects.equals(status, Cell.SHIP)) {
+                    displayStatus = Cell.WATER;
+                    colorCode = "\u001B[34m";
+                } else {
+                    displayStatus = status;
+                    colorCode = switch (status) {
+                        case Cell.WATER -> "\u001B[34m";
+                        case Cell.MISS -> "\u001B[37m";
+                        case Cell.HIT -> "\u001B[31m";
+                        case Cell.SUNK -> "\u001B[30m";
+                        default -> "\u001B[0m";
+                    };
+                }
+
+                System.out.print(colorCode + displayStatus + "  ");  // Adjust space to 2 spaces between cells
+            }
+            System.out.print("\u001B[0m        ");
+
+            // Print the row number and the player's board row
+            System.out.print(row + "   ");  // Adjusted spacing here for row numbers
+            for (Cell cell : board[row]) {
+                String status = cell.getStatus();
+                String colorCode = switch (status) {
+                    case Cell.SHIP -> cell.colourCode;
+                    case Cell.WATER -> "\u001B[34m";
+                    case Cell.MISS -> "\u001B[37m";
+                    case Cell.HIT -> "\u001B[31m";
+                    case Cell.SUNK -> "\u001B[30m";
+                    default -> "\u001B[0m";
+                };
+                System.out.print(colorCode + status + "  ");  // Adjust space to 2 spaces between cells
+            }
+            System.out.println("\u001B[0m");
+        }
+    }
+
 
     public void printBoardForEnemy() {
         for (Cell[] row : board) {
