@@ -4,6 +4,7 @@ public class Board {
     private final int length;
     private final Cell[][] board;
     private int numShips = 0;
+    private Player currentPlayer;
 
     public Board(int length) {
         this.length = length;
@@ -43,6 +44,7 @@ public class Board {
                 };
 
                 System.out.print(colorCode + status + " ");
+                
             }
             System.out.println("\u001B[0m"); // Reset color at the end of each row
         }
@@ -116,12 +118,16 @@ public class Board {
     private boolean validateShipLocation(Ship ship, Location location) {
 
         if (!hasSpace(ship)) {
-            System.out.println("Error, there is not enough space for that ship in that direction");
+            if (currentPlayer instanceof HumanPlayer) {
+                System.out.println("Error, there is not enough space for that ship in that direction");
+            }
             return false;
         }
 
         if (!isShipNear(ship)) {
-            System.out.println("Error, there is a ship near");
+            if (currentPlayer instanceof HumanPlayer) {
+                System.out.println("Error, there is a ship near");
+            }
             return false;
         }
 
