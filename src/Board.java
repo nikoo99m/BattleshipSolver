@@ -392,6 +392,12 @@ public class Board {
             System.out.println("\u001B[0m");
         }
     }
+    public Cell getCell(int x, int y) {
+        return board[x][y];
+    }
+    public Cell getCell(Location loc) {
+        return board[loc.getRow()][loc.getColumn()];
+    }
 
 }
 
