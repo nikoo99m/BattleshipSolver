@@ -34,4 +34,20 @@ public class InputCheck {
             }
         }
     }
+    public static boolean checkYesOrNoInput(Scanner scanner, String message) {
+        String input;
+        while (true) {
+            System.out.print(message);
+            input = scanner.next().trim().toLowerCase();
+
+            if (input.equals("yes") || input.equals("y")) {
+                return true;
+            } else if (input.equals("no") || input.equals("n")) {
+                return false;
+            } else {
+                System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+            }
+        }
+    }
+
 }
