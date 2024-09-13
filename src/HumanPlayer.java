@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class HumanPlayer extends Player {
@@ -7,17 +8,28 @@ public class HumanPlayer extends Player {
         super(board);
     }
 
-
+    @Override
     public void placeAllShips() {
+        Scanner scanner = new Scanner(System.in);
+
+        boolean manualPlacement = InputCheck.checkYesOrNoInput(scanner, "Do you want to place your ships manually? (yes or no): ");
+
+        if (manualPlacement) {
+
+            placeShipsManually(scanner);
+        } else {
+
+            placeShipsRandomly();
+        }
+    }
+
+    private void placeShipsManually(Scanner scanner) {
         DefaultShip defaultShip = new DefaultShip();
         List<Ship> defaultShips = defaultShip.initializeDefaultShip();
-
-        Scanner scanner = new Scanner(System.in);
 
         for (Ship ship : defaultShips) {
             boolean placed = false;
             while (!placed) {
-
                 System.out.println("Placing " + ship.getName() + " of size " + ship.getSize());
 
                 String getRow = "Enter starting row";
@@ -35,13 +47,37 @@ public class HumanPlayer extends Player {
                     board.printBoard();
                 } else {
                     System.out.println("Cannot place ship at specified location. Please try again.");
-
                 }
             }
         }
     }
 
+    private void placeShipsRandomly() {
+        DefaultShip defaultShip = new DefaultShip();
+        List<Ship> defaultShips = defaultShip.initializeDefaultShip();
+        Random random = new Random();
+
+        for (Ship ship : defaultShips) {
+            boolean placed = false;
+            while (!placed) {
+                int row = random.nextInt(board.getLength());
+                int column = random.nextInt(board.getLength());
+                Direction direction = random.nextBoolean() ? Direction.HORIZONTAL : Direction.VERTICAL;
+
+                ship.setLocation(new Location(column, row));
+                ship.setDirection(direction);
+
+                if (board.addShip(ship)) {
+                    placed = true;
+                }
+            }
+        }
+        board.printBoard();
+    }
+
+    @Override
     public void shoot(Board enemyBoard) {
+        board.printBoardsSideBySide(enemyBoard);
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the row of the point for shooting");
         int row = scanner.nextInt();
@@ -51,18 +87,14 @@ public class HumanPlayer extends Player {
         setLastShot(firedLocation);
 
         if (enemyBoard.addHit(firedLocation)) {
-            System.out.println("It's a Hit!");
             enemyBoard.printBoardForEnemy();
         } else {
             System.out.println("It's a Miss! Next player's turn.");
-            enemyBoard.printBoardForEnemy();
         }
     }
 
+    @Override
     public Board getBoard() {
         return board;
     }
 }
-
-
-
