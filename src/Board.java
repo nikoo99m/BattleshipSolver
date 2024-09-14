@@ -398,6 +398,11 @@ public class Board {
     public Cell getCell(Location loc) {
         return board[loc.getRow()][loc.getColumn()];
     }
+    public boolean isAlreadyShot(Location location) {
+        String status = getCellStatus(location);
+        return status.equals(Cell.HIT) || status.equals(Cell.MISS);
+    }
+
 
 }
 
