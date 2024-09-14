@@ -13,7 +13,7 @@ public class ShipPlacement {
     }
 
     public void placeAllShips(String filename) {
-        board.resetBoard();  // Reset the board before placing ships
+//        board.resetBoard();  // Reset the board before placing ships
         DefaultShip defaultShip = new DefaultShip();
         List<Ship> defaultShips = defaultShip.initializeDefaultShip();
 
