@@ -1,19 +1,27 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
 public class InputCheck {
+
     public static Location checkLocationInput(Scanner scanner, Board board, String rowMessage, String columnMessage) {
         int row, column;
         while (true) {
-            System.out.print(rowMessage);
-            row = scanner.nextInt();
-            System.out.print(columnMessage);
-            column = scanner.nextInt();
+            try {
+                System.out.print(rowMessage);
+                row = scanner.nextInt();
+                System.out.print(columnMessage);
+                column = scanner.nextInt();
 
-            if (Location.locationIsValid(row, column, board)) {
-                break;
-            } else {
-                System.out.println("Invalid location. Please enter again.");
+                if (row < 0 || row >= board.getLength()) {
+                    System.out.println("Invalid row. Please enter a row between 0 and " + (board.getLength() - 1) + ".");
+                } else if (column < 0 || column >= board.getLength()) {
+                    System.out.println("Invalid column. Please enter a column between 0 and " + (board.getLength() - 1) + ".");
+                } else {
+                    break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter numeric values.");
+                scanner.next();
             }
         }
 
@@ -23,17 +31,23 @@ public class InputCheck {
     public static Direction checkDirectipnInput(Scanner scanner, String directionMessage) {
         int direction;
         while (true) {
-            System.out.print(directionMessage);
-            direction = scanner.nextInt();
-            if (direction == 0)
-                return Direction.HORIZONTAL;
-            else if (direction == 1) {
-                return Direction.VERTICAL;
-            } else {
-                System.out.println("Invalid direction. Please enter again.");
+            try {
+                System.out.print(directionMessage);
+                direction = scanner.nextInt();
+                if (direction == 0)
+                    return Direction.HORIZONTAL;
+                else if (direction == 1) {
+                    return Direction.VERTICAL;
+                } else {
+                    System.out.println("Invalid direction. Please enter 0 for HORIZONTAL or 1 for VERTICAL.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter numeric values.");
+                scanner.next();
             }
         }
     }
+
     public static boolean checkYesOrNoInput(Scanner scanner, String message) {
         String input;
         while (true) {
