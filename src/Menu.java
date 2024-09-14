@@ -15,7 +15,7 @@ public class Menu {
         System.out.println();
         String input = "";
         do {
-            System.out.print("What do you wish to do? ");
+            System.out.print("What do you wish to do (1-2)? ");
             try {
                 input = in.readLine();
             } catch (java.io.IOException e) {
@@ -33,9 +33,8 @@ public class Menu {
 
     public void showRules() {
         ConsoleHelper.eraseConsole();
-        System.out.println("########################################");
-        System.out.println("### 🛳️ Welcome to the Battleship Game! 🛳️ ###");
-        System.out.println("########################################\n");
+        System.out.println(" 🛳️ Welcome to the Battleship Game! 🛳️ ");
+
 
         // Rule 1: Setup
         System.out.println("╔══════════════════════╗");
