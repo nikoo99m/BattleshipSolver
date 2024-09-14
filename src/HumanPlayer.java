@@ -79,20 +79,18 @@ public class HumanPlayer extends Player {
     public void shoot(Board enemyBoard) {
         board.printBoardsSideBySide(enemyBoard);
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the row of the point for shooting");
-        int row = scanner.nextInt();
-        System.out.println("Enter the column of the point for shooting");
-        int column = scanner.nextInt();
-        Location firedLocation = new Location(column, row);
+        String rowMessage = "Enter the row of the point for shooting: ";
+        String columnMessage = "Enter the column of the point for shooting: ";
+        Location firedLocation = InputCheck.checkShootingInput(scanner, enemyBoard, rowMessage, columnMessage);
+
         setLastShot(firedLocation);
 
         if (enemyBoard.addHit(firedLocation)) {
-            enemyBoard.printBoardForEnemy();
+            System.out.println("It's a Hit!");
         } else {
             System.out.println("It's a Miss! Next player's turn.");
         }
     }
-
     @Override
     public Board getBoard() {
         return board;
