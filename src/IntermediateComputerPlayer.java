@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class ComputerPlayer extends Player {
+public class IntermediateComputerPlayer extends Player {
     private int boardSize;
     private boolean targetingMode;
     private List<Location> targetCells;
@@ -8,7 +8,7 @@ public class ComputerPlayer extends Player {
     private Location firstHitLocation;
     private Set<Location> sunkShipLocations;
 
-    public ComputerPlayer(Board board) {
+    public IntermediateComputerPlayer(Board board) {
         super(board);
         this.boardSize = board.getLength();
         this.targetingMode = false;
@@ -41,7 +41,7 @@ public class ComputerPlayer extends Player {
                 }
             }
         }
-        board.printBoard();
+        //board.printBoard();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class ComputerPlayer extends Player {
 
             if (enemyBoard.addHit(shotLocation)) {
                 System.out.println("Computer hits at (" + shotLocation.getRow() + ", " + shotLocation.getColumn() + ")");
-                enemyBoard.printBoardForEnemy();
+                //enemyBoard.printBoardForEnemy();
                 if (enemyBoard.isShipSunk(shotLocation)) {
                     System.out.println("Computer sunk a ship!");
                     markSunkShip(shotLocation, enemyBoard);
@@ -79,7 +79,7 @@ public class ComputerPlayer extends Player {
                 }
             } else {
                 System.out.println("Computer misses at (" + shotLocation.getRow() + ", " + shotLocation.getColumn() + ")");
-                enemyBoard.printBoardForEnemy();
+                //enemyBoard.printBoardForEnemy();
                 if (targetDirection != null && !targetCells.isEmpty()) {
                     continue;
                 } else {
@@ -98,7 +98,7 @@ public class ComputerPlayer extends Player {
             int column = random.nextInt(boardSize);
             shotLocation = new Location(column, row);
         } while (isAlreadyShot(shotLocation, enemyBoard)  || isAdjacentToSunkShip(shotLocation, enemyBoard));
-        // || isAdjacentToSunkShip(shotLocation, enemyBoard
+
 
         return shotLocation;
     }
