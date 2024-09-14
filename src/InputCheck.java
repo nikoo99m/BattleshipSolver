@@ -50,4 +50,30 @@ public class InputCheck {
         }
     }
 
+    public static Location checkShootingInput(Scanner scanner, Board enemyBoard, String rowMessage, String columnMessage) {
+        int row, column;
+        while (true) {
+            try {
+                System.out.print(rowMessage);
+                row = scanner.nextInt();
+                System.out.print(columnMessage);
+                column = scanner.nextInt();
+
+                if (row < 0 || row >= enemyBoard.getLength()) {
+                    System.out.println("Invalid row. Please enter a row between 0 and " + (enemyBoard.getLength() - 1) + ".");
+                } else if (column < 0 || column >= enemyBoard.getLength()) {
+                    System.out.println("Invalid column. Please enter a column between 0 and " + (enemyBoard.getLength() - 1) + ".");
+                } else if (enemyBoard.isAlreadyShot(new Location(column, row))) {
+                    System.out.println("This location has already been shot. Please choose a different location.");
+                } else {
+                    break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter numeric values.");
+                scanner.next();
+            }
+        }
+
+        return new Location(column, row);
+    }
 }
