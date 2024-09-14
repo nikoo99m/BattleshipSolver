@@ -4,18 +4,17 @@ import java.util.regex.Pattern;
 
 public class Game {
     private final Player player1;
-    private final Player player2;
-    int difficulty;
+    private Player player2;
+    private int difficulty;
 
-        public Game() {
-            player1 = new HumanPlayer(new Board(10));
-            player2 = new HumanPlayer(new Board(10));
-        }
+    public Game() {
+        player1 = new HumanPlayer(new Board(10));
+    }
 
     public void startOfTheGame() {
-        System.out.println("WELCOME TO BATTLESHIP GAME");
         System.out.println();
         setDifficulty();
+        initializeAIPlayer();
         System.out.println();
         System.out.println("Here is your initial board to place ships:");
         Board board = new Board(10);
@@ -29,7 +28,6 @@ public class Game {
         boolean hit;
         do {
             System.out.println((player == player1 ? "Player 1" : "Player 2") + "'s turn:");
-//              System.out.println(player.getClass().getSimpleName() + "'s turn:");
             player.shoot(enemy.getBoard());
 
             Location lastShot = player.getLastShot();
@@ -44,8 +42,6 @@ public class Game {
 
         while (!gameOver) {
             turn(currentPlayer, enemyPlayer);
-
-
             gameOver = checkGameOver();
 
             if (!gameOver) {
@@ -63,7 +59,6 @@ public class Game {
     }
 
     private boolean checkGameOver() {
-
         return player1.getBoard().areAllShipsSunk() || player2.getBoard().areAllShipsSunk();
     }
 
@@ -72,7 +67,7 @@ public class Game {
         String input = "";
 
         System.out.println("╔═══════════════╗  ╔════════════════════╗  ╔════════════════╗");
-        System.out.println("║     1. Easy   ║  ║  2. Intermediate   ║  ║  3. Difficult  ║");
+        System.out.println("║     1. Easy   ║  ║  2. Intermediate   ║  ║  3. Hard       ║");
         System.out.println("╚═══════════════╝  ╚════════════════════╝  ╚════════════════╝");
         System.out.println();
 
@@ -85,9 +80,23 @@ public class Game {
             }
         } while (!Pattern.matches("[123]", input));
 
-        this.difficulty = Integer.valueOf(input);
+        this.difficulty = Integer.parseInt(input);
         System.out.println("You have selected difficulty: " + this.difficulty);
     }
 
+    private void initializeAIPlayer() {
+        switch (this.difficulty) {
+            case 1:
+                player2 = new EasyComputerPlayer(new Board(10));
+                break;
+            case 2:
+                player2 = new IntermediateComputerPlayer(new Board(10));
+                break;
+            case 3:
+                player2 = new HardComputerPlayer(new Board(10));
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid difficulty level: " + this.difficulty);
+        }
+    }
 }
-
