@@ -27,8 +27,7 @@ public class HumanPlayer extends AbstractPlayer {
 
             placeShipsManually(scanner);
         } else {
-
-            placeShipsRandomly();
+            super.placeAllShips();
         }
     }
 
@@ -60,30 +59,6 @@ public class HumanPlayer extends AbstractPlayer {
             }
         }
     }
-
-    private void placeShipsRandomly() {
-        DefaultShip defaultShip = new DefaultShip();
-        List<Ship> defaultShips = defaultShip.initializeDefaultShip();
-        Random random = new Random();
-
-        for (Ship ship : defaultShips) {
-            boolean placed = false;
-            while (!placed) {
-                int row = random.nextInt(board.getLength());
-                int column = random.nextInt(board.getLength());
-                Direction direction = random.nextBoolean() ? Direction.HORIZONTAL : Direction.VERTICAL;
-
-                ship.setLocation(new Location(column, row));
-                ship.setDirection(direction);
-
-                if (board.addShip(ship)) {
-                    placed = true;
-                }
-            }
-        }
-        board.printBoard();
-    }
-
     @Override
     public void shoot(Board enemyBoard) {
         board.printBoardsSideBySide(enemyBoard);
