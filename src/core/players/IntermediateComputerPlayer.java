@@ -28,31 +28,6 @@ public class IntermediateComputerPlayer extends AbstractPlayer {
     }
 
     @Override
-    public void placeAllShips() {
-        DefaultShip defaultShip = new DefaultShip();
-        List<Ship> defaultShips = defaultShip.initializeDefaultShip();
-
-        Random random = new Random();
-
-        for (Ship ship : defaultShips) {
-            boolean placed = false;
-            while (!placed) {
-                int row = random.nextInt(boardSize);
-                int column = random.nextInt(boardSize);
-                Direction direction = random.nextBoolean() ? Direction.HORIZONTAL : Direction.VERTICAL;
-
-                Location location = new Location(column, row);
-                ship.setLocation(location);
-                ship.setDirection(direction);
-
-                if (board.addShip(ship)) {
-                    placed = true;
-                }
-            }
-        }
-    }
-
-    @Override
     public void shoot(Board enemyBoard) {
         Location shotLocation;
 

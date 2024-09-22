@@ -22,6 +22,7 @@ public class HardComputerPlayer extends AbstractPlayer {
     private Location firstHitLocation;
     private Set<Location> sunkShipLocations;
     private double[][] predictedBoard;
+
     public HardComputerPlayer(Board board) {
         super(board);
         this.boardSize = board.getLength();
@@ -31,9 +32,7 @@ public class HardComputerPlayer extends AbstractPlayer {
         this.firstHitLocation = null;
         this.sunkShipLocations = new HashSet<>();
         this.predictedBoard = fetchPredictedBoard(board);
-
     }
-
 
     private double[][] fetchPredictedBoard(Board enemyBoard) {
         double[][] predictedBoard = new double[boardSize][boardSize];
@@ -82,34 +81,6 @@ public class HardComputerPlayer extends AbstractPlayer {
 
         return predictedBoard;
     }
-
-
-    @Override
-    public void placeAllShips() {
-        DefaultShip defaultShip = new DefaultShip();
-        List<Ship> defaultShips = defaultShip.initializeDefaultShip();
-
-        Random random = new Random();
-
-        for (Ship ship : defaultShips) {
-            boolean placed = false;
-            while (!placed) {
-                int row = random.nextInt(boardSize);
-                int column = random.nextInt(boardSize);
-                Direction direction = random.nextBoolean() ? Direction.HORIZONTAL : Direction.VERTICAL;
-
-                Location location = new Location(column, row);
-                ship.setLocation(location);
-                ship.setDirection(direction);
-
-                if (board.addShip(ship)) {
-                    placed = true;
-                }
-            }
-        }
-        //board.printBoard();
-    }
-
 
     @Override
     public void shoot(Board enemyBoard) {

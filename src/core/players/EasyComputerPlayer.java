@@ -19,30 +19,6 @@ public class EasyComputerPlayer extends AbstractPlayer {
         }
 
         @Override
-        public void placeAllShips() {
-            DefaultShip defaultShip = new DefaultShip();
-            List<Ship> defaultShips = defaultShip.initializeDefaultShip();
-
-            for (Ship ship : defaultShips) {
-                boolean placed = false;
-                while (!placed) {
-
-                    int row = random.nextInt(board.getLength());
-                    int column = random.nextInt(board.getLength());
-
-                    Direction direction = random.nextBoolean() ? Direction.HORIZONTAL : Direction.VERTICAL;
-
-                    ship.setLocation(new Location(row, column));
-                    ship.setDirection(direction);
-
-                    if (board.addShip(ship)) {
-                        placed = true;
-                    }
-                }
-            }
-        }
-
-        @Override
         public void shoot(Board enemyBoard) {
             boolean validShot = false;
             Location shotLocation = null;
