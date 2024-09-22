@@ -1,4 +1,4 @@
-package models.Ships;
+package models.ships;
 
 public class Destroyer extends Ship {
     private static final String NAME = "Models.Ships.Destroyer";

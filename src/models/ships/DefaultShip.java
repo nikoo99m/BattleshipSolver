@@ -1,4 +1,4 @@
-package models.Ships;
+package models.ships;
 
 import java.util.ArrayList;
 import java.util.List;

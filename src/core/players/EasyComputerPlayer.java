@@ -3,8 +3,8 @@ package core.players;
 import core.Board;
 import enums.Direction;
 import models.Location;
-import models.Ships.DefaultShip;
-import models.Ships.Ship;
+import models.ships.DefaultShip;
+import models.ships.Ship;
 
 import java.util.List;
 import java.util.Random;

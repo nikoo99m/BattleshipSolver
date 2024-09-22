@@ -1,4 +1,4 @@
-package models.Ships;
+package models.ships;
 
 import enums.Direction;
 import models.Location;

@@ -30,11 +30,11 @@ Battleship is a two-player strategy game where each player tries to sink the opp
 
 2. **Ships:**
    Each player has a fleet of ships in varying lengths:
-   - 1 Aircraft models.Ships.Carrier (5 squares)
+   - 1 Aircraft models.ships.Carrier (5 squares)
    - 1 Battleship (4 squares)
-   - 1 models.Ships.Submarine (3 squares)
-   - 1 models.Ships.Cruiser (3 squares)
-   - 1 models.Ships.Destroyer (2 squares)
+   - 1 models.ships.Submarine (3 squares)
+   - 1 models.ships.Cruiser (3 squares)
+   - 1 models.ships.Destroyer (2 squares)
 
 3. **Placing Ships:**
    - Ships can be placed horizontally or vertically but not diagonally.

@@ -1,6 +1,6 @@
 package models;
 
-import models.Ships.Ship;
+import models.ships.Ship;
 
 public class Cell {
     private String status;

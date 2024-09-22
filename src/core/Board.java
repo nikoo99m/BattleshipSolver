@@ -3,7 +3,7 @@ package core;
 import enums.Direction;
 import models.Cell;
 import models.Location;
-import models.Ships.Ship;
+import models.ships.Ship;
 import core.players.HumanPlayer;
 import core.players.Player;
 
