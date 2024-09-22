@@ -1,11 +1,11 @@
 package core;
 
 import enums.Direction;
+import interfaces.Player;
 import models.Cell;
 import models.Location;
 import models.ships.Ship;
 import core.players.HumanPlayer;
-import core.players.AbstractPlayer;
 
 import java.util.Objects;
 
@@ -13,7 +13,7 @@ public class Board {
     private final int length;
     private final Cell[][] board;
     private int numShips = 0;
-    private AbstractPlayer currentPlayer;
+    private Player currentPlayer;
 
     public Board(int length) {
         this.length = length;

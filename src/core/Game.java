@@ -1,5 +1,6 @@
 package core;
 
+import interfaces.Player;
 import models.Location;
 import core.players.*;
 
@@ -8,8 +9,8 @@ import java.io.InputStreamReader;
 import java.util.regex.Pattern;
 
 public class Game {
-    private final AbstractPlayer player1;
-    private AbstractPlayer player2;
+    private final Player player1;
+    private Player player2;
     private int difficulty;
 
     public Game() {
@@ -29,7 +30,7 @@ public class Game {
         player2.placeAllShips();
     }
 
-    private void turn(AbstractPlayer player, AbstractPlayer enemy) {
+    private void turn(Player player, Player enemy) {
         boolean hit;
         do {
             System.out.println((player == player1 ? "AbstractPlayer 1" : "AbstractPlayer 2") + "'s turn:");
@@ -42,8 +43,8 @@ public class Game {
 
     public void playGame() {
         boolean gameOver = false;
-        AbstractPlayer currentPlayer = player1;
-        AbstractPlayer enemyPlayer = player2;
+        Player currentPlayer = player1;
+        Player enemyPlayer = player2;
 
         while (!gameOver) {
             turn(currentPlayer, enemyPlayer);
