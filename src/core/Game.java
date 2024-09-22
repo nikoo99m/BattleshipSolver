@@ -23,6 +23,9 @@ public class Game {
         initializeAIPlayer();
         System.out.println();
         System.out.println("Here is your initial board to place ships:");
+        System.out.println();
+        System.out.println("you will play as player 1 ");
+        System.out.println();
         Board board = new Board(10);
         board.printBoard();
         System.out.println();
@@ -33,7 +36,7 @@ public class Game {
     private void turn(Player player, Player enemy) {
         boolean hit;
         do {
-            System.out.println((player == player1 ? "AbstractPlayer 1" : "AbstractPlayer 2") + "'s turn:");
+            System.out.println((player == player1 ? "Player 1" : "Player 2") + "'s turn:");
             player.shoot(enemy.getBoard());
 
             Location lastShot = player.getLastShot();
@@ -60,8 +63,8 @@ public class Game {
                 }
             }
         }
-        System.out.println("core.Game over!");
-        System.out.println((currentPlayer == player1 ? "AbstractPlayer 1" : "AbstractPlayer 2") + " wins!");
+        System.out.println("Game over!");
+        System.out.println((currentPlayer == player1 ? "Player 1" : "Player 2") + " wins!");
     }
 
     private boolean checkGameOver() {

@@ -213,7 +213,7 @@ public class Board {
             updateCellStatus(Cell.HIT, location);
 
             if (isShipSunk(location)) {
-                System.out.println("Models.Ships.Ship sunk!");
+                System.out.println("Ship is sunk!");
 
                 markSunkShip(location);
                 return true;
@@ -316,7 +316,7 @@ public class Board {
     }
     public void printBoardsSideBySide(Board enemyBoard) {
         System.out.println();
-        System.out.println("\t\t\t\t\tEnemy core.Board\t\t\t\t\t\t\t\t\t\t\t\tYour core.Board");
+        System.out.println("\t\t\t\t\tEnemy Board\t\t\t\t\t\t\t\t\t\t\t\tYour Board");
 
         // Print column headers for both boards
         System.out.print("      ");
