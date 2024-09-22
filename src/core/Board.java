@@ -5,7 +5,7 @@ import models.Cell;
 import models.Location;
 import models.ships.Ship;
 import core.players.HumanPlayer;
-import core.players.Player;
+import core.players.AbstractPlayer;
 
 import java.util.Objects;
 
@@ -13,7 +13,7 @@ public class Board {
     private final int length;
     private final Cell[][] board;
     private int numShips = 0;
-    private Player currentPlayer;
+    private AbstractPlayer currentPlayer;
 
     public Board(int length) {
         this.length = length;

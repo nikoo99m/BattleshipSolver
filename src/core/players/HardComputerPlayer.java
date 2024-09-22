@@ -14,7 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
 
-public class HardComputerPlayer extends Player {
+public class HardComputerPlayer extends AbstractPlayer {
     private int boardSize;
     private boolean targetingMode;
     private List<Location> targetCells;

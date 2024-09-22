@@ -8,8 +8,8 @@ import java.io.InputStreamReader;
 import java.util.regex.Pattern;
 
 public class Game {
-    private final Player player1;
-    private Player player2;
+    private final AbstractPlayer player1;
+    private AbstractPlayer player2;
     private int difficulty;
 
     public Game() {
@@ -29,10 +29,10 @@ public class Game {
         player2.placeAllShips();
     }
 
-    private void turn(Player player, Player enemy) {
+    private void turn(AbstractPlayer player, AbstractPlayer enemy) {
         boolean hit;
         do {
-            System.out.println((player == player1 ? "Player 1" : "Player 2") + "'s turn:");
+            System.out.println((player == player1 ? "AbstractPlayer 1" : "AbstractPlayer 2") + "'s turn:");
             player.shoot(enemy.getBoard());
 
             Location lastShot = player.getLastShot();
@@ -42,8 +42,8 @@ public class Game {
 
     public void playGame() {
         boolean gameOver = false;
-        Player currentPlayer = player1;
-        Player enemyPlayer = player2;
+        AbstractPlayer currentPlayer = player1;
+        AbstractPlayer enemyPlayer = player2;
 
         while (!gameOver) {
             turn(currentPlayer, enemyPlayer);
@@ -60,7 +60,7 @@ public class Game {
             }
         }
         System.out.println("core.Game over!");
-        System.out.println((currentPlayer == player1 ? "Player 1" : "Player 2") + " wins!");
+        System.out.println((currentPlayer == player1 ? "AbstractPlayer 1" : "AbstractPlayer 2") + " wins!");
     }
 
     private boolean checkGameOver() {

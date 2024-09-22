@@ -9,7 +9,7 @@ import models.ships.Ship;
 import java.util.List;
 import java.util.Random;
 
-public class EasyComputerPlayer extends Player {
+public class EasyComputerPlayer extends AbstractPlayer {
 
         private final Random random;
 

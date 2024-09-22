@@ -9,7 +9,7 @@ import models.ships.Ship;
 
 import java.util.*;
 
-public class IntermediateComputerPlayer extends Player {
+public class IntermediateComputerPlayer extends AbstractPlayer {
     private int boardSize;
     private boolean targetingMode;
     private List<Location> targetCells;

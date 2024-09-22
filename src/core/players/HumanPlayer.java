@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class HumanPlayer extends Player {
+public class HumanPlayer extends AbstractPlayer {
 
     public HumanPlayer(Board board) {
         super(board);
