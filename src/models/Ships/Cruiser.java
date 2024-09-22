@@ -1,5 +1,7 @@
-public class Cruiser extends Ship{
-    private static final String NAME = "Cruiser";
+package models.Ships;
+
+public class Cruiser extends Ship {
+    private static final String NAME = "Models.Ships.Cruiser";
     private static final int LENGTH = 3;
 
 

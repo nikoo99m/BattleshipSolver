@@ -1,3 +1,7 @@
+package models;
+
+import core.Board;
+
 public class Location {
     private final int row;
     private final int column;

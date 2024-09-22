@@ -1,3 +1,7 @@
+package models;
+
+import models.Ships.Ship;
+
 public class Cell {
     private String status;
 

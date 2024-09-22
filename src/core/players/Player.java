@@ -1,3 +1,8 @@
+package core.players;
+
+import core.Board;
+import models.Location;
+
 public abstract class Player {
     protected Location lastShot;
     

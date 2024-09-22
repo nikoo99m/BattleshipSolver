@@ -1,14 +1,28 @@
+package core.players;
+
+import core.Board;
+import enums.Direction;
+import models.Cell;
+import models.Location;
+import models.Ships.DefaultShip;
+import models.Ships.Ship;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
 
-public class IntermediateComputerPlayer extends Player {
+public class HardComputerPlayer extends Player {
     private int boardSize;
     private boolean targetingMode;
     private List<Location> targetCells;
     private Direction targetDirection;
     private Location firstHitLocation;
     private Set<Location> sunkShipLocations;
-
-    public IntermediateComputerPlayer(Board board) {
+    private double[][] predictedBoard;
+    public HardComputerPlayer(Board board) {
         super(board);
         this.boardSize = board.getLength();
         this.targetingMode = false;
@@ -16,7 +30,59 @@ public class IntermediateComputerPlayer extends Player {
         this.targetDirection = null;
         this.firstHitLocation = null;
         this.sunkShipLocations = new HashSet<>();
+        this.predictedBoard = fetchPredictedBoard(board);
+
     }
+
+
+    private double[][] fetchPredictedBoard(Board enemyBoard) {
+        double[][] predictedBoard = new double[boardSize][boardSize];
+
+        try {
+
+            String[][] board = new String[boardSize][boardSize];
+            for (int i = 0; i < boardSize; i++) {
+                for (int j = 0; j < boardSize; j++) {
+                    Location loc = new Location(j, i);
+                    Cell cell = enemyBoard.getCell(loc);
+                    board[i][j] = cell.getStatus();
+                }
+            }
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("board", board);
+
+            URL url = new URL("http://localhost:5000/predict");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json; utf-8");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setDoOutput(true);
+
+            try (OutputStream os = conn.getOutputStream()) {
+                byte[] input = jsonObject.toString().getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+
+            try (Scanner scanner = new Scanner(conn.getInputStream())) {
+                String responseBody = scanner.useDelimiter("\\A").next();
+                JSONArray predictions = new JSONArray(responseBody);
+
+                for (int i = 0; i < predictions.length(); i++) {
+                    JSONArray row = predictions.getJSONArray(i);
+                    for (int j = 0; j < row.length(); j++) {
+                        predictedBoard[i][j] = row.getDouble(j);
+                    }
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return predictedBoard;
+    }
+
 
     @Override
     public void placeAllShips() {
@@ -44,15 +110,18 @@ public class IntermediateComputerPlayer extends Player {
         //board.printBoard();
     }
 
+
     @Override
     public void shoot(Board enemyBoard) {
+
         Location shotLocation;
 
         while (true) {
+
             if (targetingMode && !targetCells.isEmpty()) {
                 shotLocation = targetCells.remove(0);
             } else {
-                shotLocation = selectRandomShot(enemyBoard);
+                shotLocation = selectPredictedShot(enemyBoard);
             }
 
             setLastShot(shotLocation);
@@ -60,17 +129,19 @@ public class IntermediateComputerPlayer extends Player {
             if (enemyBoard.addHit(shotLocation)) {
                 System.out.println("Computer hits at (" + shotLocation.getRow() + ", " + shotLocation.getColumn() + ")");
                 //enemyBoard.printBoardForEnemy();
+
                 if (enemyBoard.isShipSunk(shotLocation)) {
                     System.out.println("Computer sunk a ship!");
                     markSunkShip(shotLocation, enemyBoard);
                     resetTargetingMode();
+                    updatePredictions(enemyBoard);
                     break;
                 } else {
                     targetingMode = true;
                     if (firstHitLocation == null) {
                         firstHitLocation = shotLocation;
                         addAdjacentCellsToTarget(shotLocation, enemyBoard);
-                    } else if (targetDirection == null) {
+                    } else if ( targetDirection == null) {
                         determineTargetDirection(shotLocation);
                         refineDirectionalTargets(enemyBoard);
                     } else {
@@ -78,6 +149,7 @@ public class IntermediateComputerPlayer extends Player {
                     }
                 }
             } else {
+
                 System.out.println("Computer misses at (" + shotLocation.getRow() + ", " + shotLocation.getColumn() + ")");
                 //enemyBoard.printBoardForEnemy();
                 if (targetDirection != null && !targetCells.isEmpty()) {
@@ -89,6 +161,31 @@ public class IntermediateComputerPlayer extends Player {
         }
     }
 
+    private void updatePredictions(Board enemyBoard) {
+        this.predictedBoard = fetchPredictedBoard(enemyBoard);
+    }
+
+    private Location selectPredictedShot(Board enemyBoard) {
+        Location bestShotLocation = null;
+        double highestProbability = -1.0;
+
+        for (int row = 0; row < boardSize; row++) {
+            for (int col = 0; col < boardSize; col++) {
+                Location location = new Location(col, row);
+                if (!isAlreadyShot(location, enemyBoard) && predictedBoard[row][col] > highestProbability) {
+                    highestProbability = predictedBoard[row][col];
+                    bestShotLocation = location;
+                }
+            }
+        }
+
+        if (bestShotLocation == null) {
+            bestShotLocation = selectRandomShot(enemyBoard);
+        }
+
+        return bestShotLocation;
+    }
+
     private Location selectRandomShot(Board enemyBoard) {
         Random random = new Random();
         Location shotLocation;
@@ -97,8 +194,7 @@ public class IntermediateComputerPlayer extends Player {
             int row = random.nextInt(boardSize);
             int column = random.nextInt(boardSize);
             shotLocation = new Location(column, row);
-        } while (isAlreadyShot(shotLocation, enemyBoard)  || isAdjacentToSunkShip(shotLocation, enemyBoard));
-
+        } while (isAlreadyShot(shotLocation, enemyBoard) || isAdjacentToSunkShip(shotLocation, enemyBoard));
 
         return shotLocation;
     }
@@ -126,7 +222,6 @@ public class IntermediateComputerPlayer extends Player {
         int row = shotLocation.getRow();
         int col = shotLocation.getColumn();
 
-        // Mark horizontal and vertical directions
         for (int i = col; i >= 0; i--) {
             Location loc = new Location(i, row);
             if (enemyBoard.getCellStatus(loc).equals(Cell.WATER)) break;
@@ -179,7 +274,7 @@ public class IntermediateComputerPlayer extends Player {
         targetCells.clear();
         if (targetDirection == Direction.HORIZONTAL) {
             refineHorizontalTargets(enemyBoard);
-        } else { // Direction.VERTICAL
+        } else {
             refineVerticalTargets(enemyBoard);
         }
     }
@@ -188,7 +283,6 @@ public class IntermediateComputerPlayer extends Player {
         int col = firstHitLocation.getColumn();
         int row = firstHitLocation.getRow();
 
-        // Check right direction
         for (int i = col + 1; i < boardSize; i++) {
             Location loc = new Location(i, row);
             if (enemyBoard.getCellStatus(loc).equals(Cell.MISS)) break;
@@ -197,7 +291,6 @@ public class IntermediateComputerPlayer extends Player {
             break;
         }
 
-        // Check left direction
         for (int i = col - 1; i >= 0; i--) {
             Location loc = new Location(i, row);
             if (enemyBoard.getCellStatus(loc).equals(Cell.MISS)) break;
@@ -211,7 +304,6 @@ public class IntermediateComputerPlayer extends Player {
         int col = firstHitLocation.getColumn();
         int row = firstHitLocation.getRow();
 
-        // Check downward direction
         for (int i = row + 1; i < boardSize; i++) {
             Location loc = new Location(col, i);
             if (enemyBoard.getCellStatus(loc).equals(Cell.MISS)) break;
@@ -220,7 +312,6 @@ public class IntermediateComputerPlayer extends Player {
             break;
         }
 
-        // Check upward direction
         for (int i = row - 1; i >= 0; i--) {
             Location loc = new Location(col, i);
             if (enemyBoard.getCellStatus(loc).equals(Cell.MISS)) break;
@@ -242,4 +333,3 @@ public class IntermediateComputerPlayer extends Player {
         firstHitLocation = null;
     }
 }
-

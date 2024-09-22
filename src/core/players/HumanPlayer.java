@@ -1,10 +1,19 @@
+package core.players;
+
+import core.Board;
+import enums.Direction;
+import helpers.InputCheckHelper;
+import models.Location;
+import models.Ships.DefaultShip;
+import models.Ships.Ship;
+
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class HumanPlayer extends Player {
 
-    HumanPlayer(Board board) {
+    public HumanPlayer(Board board) {
         super(board);
     }
 
@@ -12,7 +21,7 @@ public class HumanPlayer extends Player {
     public void placeAllShips() {
         Scanner scanner = new Scanner(System.in);
 
-        boolean manualPlacement = InputCheck.checkYesOrNoInput(scanner, "Do you want to place your ships manually? (yes or no): ");
+        boolean manualPlacement = InputCheckHelper.checkYesOrNoInput(scanner, "Do you want to place your ships manually? (yes or no): ");
 
         if (manualPlacement) {
 
@@ -34,9 +43,9 @@ public class HumanPlayer extends Player {
 
                 String getRow = "Enter starting row";
                 String getColumn = "Enter starting column";
-                Location location = InputCheck.checkLocationInput(scanner, board, getRow, getColumn);
+                Location location = InputCheckHelper.checkLocationInput(scanner, board, getRow, getColumn);
                 String getDirection = "Enter direction (0 for HORIZONTAL, 1 for VERTICAL): ";
-                Direction direction = InputCheck.checkDirectipnInput(scanner, getDirection);
+                Direction direction = InputCheckHelper.checkDirectipnInput(scanner, getDirection);
 
                 ship.setLocation(location);
                 ship.setDirection(direction);
@@ -81,7 +90,7 @@ public class HumanPlayer extends Player {
         Scanner scanner = new Scanner(System.in);
         String rowMessage = "Enter the row of the point for shooting: ";
         String columnMessage = "Enter the column of the point for shooting: ";
-        Location firedLocation = InputCheck.checkShootingInput(scanner, enemyBoard, rowMessage, columnMessage);
+        Location firedLocation = InputCheckHelper.checkShootingInput(scanner, enemyBoard, rowMessage, columnMessage);
 
         setLastShot(firedLocation);
 

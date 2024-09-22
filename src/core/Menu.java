@@ -1,3 +1,7 @@
+package core;
+
+import helpers.ConsoleHelper;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.regex.Pattern;
@@ -33,7 +37,7 @@ public class Menu {
 
     public void showRules() {
         ConsoleHelper.eraseConsole();
-        System.out.println(" 🛳️ Welcome to the Battleship Game! 🛳️ ");
+        System.out.println(" 🛳️ Welcome to the Battleship core.Game! 🛳️ ");
 
 
         // Rule 1: Setup
@@ -42,17 +46,17 @@ public class Menu {
         System.out.println("╚══════════════════════╝");
         System.out.println("🛳️ Arrange your fleet on your grid secretly from your opponent.");
         System.out.println("⚓ Fleet includes:");
-        System.out.println("   - 1x Carrier (5 spaces)");
+        System.out.println("   - 1x Models.Ships.Carrier (5 spaces)");
         System.out.println("   - 1x Battleship (4 spaces)");
-        System.out.println("   - 1x Cruiser (3 spaces)");
-        System.out.println("   - 1x Submarine (3 spaces)");
-        System.out.println("   - 1x Destroyer (2 spaces)\n");
+        System.out.println("   - 1x Models.Ships.Cruiser (3 spaces)");
+        System.out.println("   - 1x Models.Ships.Submarine (3 spaces)");
+        System.out.println("   - 1x Models.Ships.Destroyer (2 spaces)\n");
 
         // Rule 2: Turn Order
         System.out.println("╔══════════════════════╗");
         System.out.println("🎲 Rule 2:Turn Order");
         System.out.println("╚══════════════════════╝");
-        System.out.println("⏳ Players take turns calling out coordinates to attack.");
+        System.out.println("⏳ core.Players take turns calling out coordinates to attack.");
         System.out.println("🗺️ Example: For a coordinate (row, column, direction), say \"2 3 0\" or \"5 7 1\" where:");
         System.out.println("   - First number is the row");
         System.out.println("   - Second number is the column");
@@ -75,9 +79,9 @@ public class Menu {
         System.out.println("❌ No calling the same coordinate more than once.");
         System.out.println("⛔ Do not move your ships once the game has started.\n");
 
-        // Rule 5: Winning the Game
+        // Rule 5: Winning the core.Game
         System.out.println("╔══════════════════════╗");
-        System.out.println("🏆 Rule 5:Winning Game");
+        System.out.println("🏆 Rule 5:Winning core.Game");
         System.out.println("╚══════════════════════╝");
         System.out.println("🎉 The first player to sink all of their opponent's ships wins.");
         System.out.println("👑 Declare victory by saying \"You sank my battleship!\" for the final ship.\n");

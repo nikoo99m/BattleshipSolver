@@ -1,7 +1,13 @@
+package helpers;
+
+import core.Board;
+import enums.Direction;
+import models.Location;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class InputCheck {
+public class InputCheckHelper {
 
     public static Location checkLocationInput(Scanner scanner, Board board, String rowMessage, String columnMessage) {
         int row, column;

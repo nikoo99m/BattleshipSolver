@@ -1,4 +1,4 @@
-# Battleship Game Solver Project
+# Battleship core.Game Solver Project
 
 ## Overview
 
@@ -15,12 +15,12 @@ The primary objectives of this project are:
 
 ## Project Scope
 
-### Game: Battleship
+### core.Game: Battleship
 
-#### Game Description
+#### core.Game Description
 Battleship is a two-player strategy game where each player tries to sink the opponent's fleet of ships. The game is played on two grids per player: one grid for the player's ships and one grid for recording shots on the opponent's ships.
 
-#### Game Setup
+#### core.Game Setup
 
 <img src="img2.jpg" alt="img2"/>
 
@@ -30,25 +30,25 @@ Battleship is a two-player strategy game where each player tries to sink the opp
 
 2. **Ships:**
    Each player has a fleet of ships in varying lengths:
-   - 1 Aircraft Carrier (5 squares)
+   - 1 Aircraft models.Ships.Carrier (5 squares)
    - 1 Battleship (4 squares)
-   - 1 Submarine (3 squares)
-   - 1 Cruiser (3 squares)
-   - 1 Destroyer (2 squares)
+   - 1 models.Ships.Submarine (3 squares)
+   - 1 models.Ships.Cruiser (3 squares)
+   - 1 models.Ships.Destroyer (2 squares)
 
 3. **Placing Ships:**
    - Ships can be placed horizontally or vertically but not diagonally.
    - Ships cannot overlap or be placed off the grid.
-   - Players place their ships secretly on their own grid before the game begins.
+   - core.players place their ships secretly on their own grid before the game begins.
 
 #### Gameplay
 
 1. **Taking Turns:**
-   - Players take turns calling out coordinates (e.g., "A5") to target a location on the opponent's grid.
+   - core.players take turns calling out coordinates (e.g., "A5") to target a location on the opponent's grid.
    - The opponent announces whether the shot is a "hit" or a "miss."
    - If it is a hit, the opponent must specify which ship has been hit. If all the squares of a ship are hit, the ship is sunk, and the opponent must declare "You sunk my [ship type]."
 
-2. **Winning the Game:**
+2. **Winning the core.Game:**
    - The game continues until one player has sunk all of the opponent's ships.
    - The first player to sink all of the opponent's ships wins the game.
 

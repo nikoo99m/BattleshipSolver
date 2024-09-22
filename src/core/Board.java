@@ -1,3 +1,12 @@
+package core;
+
+import enums.Direction;
+import models.Cell;
+import models.Location;
+import models.Ships.Ship;
+import core.players.HumanPlayer;
+import core.players.Player;
+
 import java.util.Objects;
 
 public class Board {
@@ -204,7 +213,7 @@ public class Board {
             updateCellStatus(Cell.HIT, location);
 
             if (isShipSunk(location)) {
-                System.out.println("Ship sunk!");
+                System.out.println("Models.Ships.Ship sunk!");
 
                 markSunkShip(location);
                 return true;
@@ -307,7 +316,7 @@ public class Board {
     }
     public void printBoardsSideBySide(Board enemyBoard) {
         System.out.println();
-        System.out.println("\t\t\t\t\tEnemy Board\t\t\t\t\t\t\t\t\t\t\t\tYour Board");
+        System.out.println("\t\t\t\t\tEnemy core.Board\t\t\t\t\t\t\t\t\t\t\t\tYour core.Board");
 
         // Print column headers for both boards
         System.out.print("      ");

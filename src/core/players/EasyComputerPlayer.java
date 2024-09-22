@@ -1,3 +1,11 @@
+package core.players;
+
+import core.Board;
+import enums.Direction;
+import models.Location;
+import models.Ships.DefaultShip;
+import models.Ships.Ship;
+
 import java.util.List;
 import java.util.Random;
 
@@ -32,7 +40,6 @@ public class EasyComputerPlayer extends Player {
                     }
                 }
             }
-            board.printBoard();
         }
 
         @Override
@@ -55,10 +62,9 @@ public class EasyComputerPlayer extends Player {
 
             if (enemyBoard.addHit(shotLocation)) {
                 System.out.println("EasyComputerPlayer hit a ship!");
-                enemyBoard.printBoardForEnemy();
             } else {
                 System.out.println("EasyComputerPlayer missed.");
-                enemyBoard.printBoardForEnemy();
+
             }
         }
 

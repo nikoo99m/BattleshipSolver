@@ -1,3 +1,8 @@
+package core;
+
+import models.Location;
+import core.players.*;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.regex.Pattern;
@@ -54,7 +59,7 @@ public class Game {
                 }
             }
         }
-        System.out.println("Game over!");
+        System.out.println("core.Game over!");
         System.out.println((currentPlayer == player1 ? "Player 1" : "Player 2") + " wins!");
     }
 

@@ -1,5 +1,7 @@
-public class BattleShip extends Ship{
-    private static final String NAME = "BattleShip";
+package models.Ships;
+
+public class BattleShip extends Ship {
+    private static final String NAME = "Models.Ships.BattleShip";
     private static final int LENGTH = 4;
 
 

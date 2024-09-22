@@ -1,4 +1,7 @@
-import java.util.Objects;
+package models.Ships;
+
+import enums.Direction;
+import models.Location;
 
 public class Ship {
 
